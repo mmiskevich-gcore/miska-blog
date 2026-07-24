@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delegating DNS without breaking everything — miska.blog</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <div class="brand">
+      <h1><a href="/">miska.blog</a></h1>
+    </div>
+    <p class="tagline">notes on self-hosting, edge networks, and running things on boxes I can actually reason about</p>
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/api/data.json">API</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <a class="back-link" href="/">&larr; Back to all posts</a>
+  <article class="post">
+    <div class="post-meta">July 5, 2026 · 5 min read</div>
+    <h1>Delegating DNS without breaking everything</h1>
+    <img class="hero" src="/images/test3.jpg" alt="">
+    <p>Every registrar has two screens that look like they should be the same thing and are not. One manages individual DNS records — A, CNAME, TXT — for the nameservers you're currently using. The other lets you change which nameservers you're using at all. Only the second one is nameserver delegation.</p>
+    <p>I found this out by opening the wrong one first. My registrar's records panel, on noticing I clicked into it, offered to "fix" my setup by resetting me back to its own default nameservers — the exact opposite of what I was there to do. Declining that dialog was the correct move; the actual delegation screen was a separate link entirely, one level up in the domain management view.</p>
+    <p>Once I found it, the change itself was two lines: swap the registrar's nameservers for the new provider's, save, and wait. Propagation is quoted anywhere from a few minutes to 48 hours depending on who you ask, and there's no way to force it — the only honest way to check is asking DNS directly rather than trusting a timer:</p>
+    <pre><code>dig NS miska.blog
+
+;; ANSWER SECTION:
+miska.blog. 3600 IN NS ns1.example-dns.net.
+miska.blog. 3600 IN NS ns2.example-dns.net.</code></pre>
+    <p>Once that query returns the new nameservers instead of the old ones, delegation is live, and every record from then on — CDN CNAMEs, ACME challenge records, the lot — gets managed in the new place. Until then, anything you configure on the new side is invisible to actual traffic, which is the failure mode worth designing your rollout around.</p>
+  </article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>&copy; 2026 miska.blog</span>
+    <span><a href="/about.html">About</a> · <a href="/api/data.json">status</a></span>
+  </div>
+</footer>
+</body>
+</html>

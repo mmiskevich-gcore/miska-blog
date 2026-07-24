@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What actually happens when a CDN caches your page — miska.blog</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <div class="brand">
+      <h1><a href="/">miska.blog</a></h1>
+    </div>
+    <p class="tagline">notes on self-hosting, edge networks, and running things on boxes I can actually reason about</p>
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/api/data.json">API</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <a class="back-link" href="/">&larr; Back to all posts</a>
+  <article class="post">
+    <div class="post-meta">July 15, 2026 · 6 min read</div>
+    <h1>What actually happens when a CDN caches your page</h1>
+    <img class="hero" src="/images/test2.jpg" alt="">
+    <p>I'd read the diagrams a dozen times: browser hits edge, edge checks cache, cache miss goes to origin, response gets stored, next request is a hit. It made sense on paper. It didn't feel real until I watched it happen against a page I control.</p>
+    <p>The first request after creating the resource came back with a cache status of <code>MISS</code> — the edge node had nothing stored yet, so it pulled from the origin VM, served it, and kept a copy. Every request after that, from anywhere near that edge node, came back <code>HIT</code> without touching origin at all.</p>
+    <p>The part that isn't obvious from a diagram: a HIT and a MISS at the CDN layer are invisible to the end user in every way except one — origin load. The response looks identical. The only reason to care is that your origin now handles a fraction of the traffic it used to, which is the entire point.</p>
+    <p>The other thing worth internalizing: cache state is edge-node-specific, not global. Whether the visitor next to me sees a HIT or a MISS depends on whether their nearest edge node already has a copy, not on whether the object exists anywhere at all in the CDN's network.</p>
+    <pre><code>curl -I https://cdn.miska.blog/
+&gt; HTTP/2 200
+&gt; cache: HIT</code></pre>
+    <p>That single header line is doing more explanatory work than any architecture diagram I'd looked at before actually standing one of these up myself.</p>
+  </article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>&copy; 2026 miska.blog</span>
+    <span><a href="/about.html">About</a> · <a href="/api/data.json">status</a></span>
+  </div>
+</footer>
+</body>
+</html>

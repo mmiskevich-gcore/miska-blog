@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Running nginx on a €7 box — miska.blog</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <div class="brand">
+      <h1><a href="/">miska.blog</a></h1>
+    </div>
+    <p class="tagline">notes on self-hosting, edge networks, and running things on boxes I can actually reason about</p>
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/api/data.json">API</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <a class="back-link" href="/">&larr; Back to all posts</a>
+  <article class="post">
+    <div class="post-meta">July 20, 2026 · 4 min read</div>
+    <h1>Running nginx on a €7 box</h1>
+    <img class="hero" src="/images/test1.jpg" alt="">
+    <p>The instinct when you spin up a new server is to over-provision. More vCPUs, more RAM, "just in case." For a static nginx origin, that instinct is almost entirely wrong.</p>
+    <p>The nginx worker process serving this page sits comfortably in tens of megabytes of resident memory. It doesn't fork per request, it doesn't hold a connection pool to a database, and it isn't compiling anything at request time. The bottleneck was never going to be compute.</p>
+    <p>What actually needed headroom was disk — the default 5&nbsp;GiB volume gets tight once you add the OS, the apt cache, nginx itself, logs, and a handful of test images. Bumping to 10&nbsp;GiB cost a fraction of a cent more per month and removed the only real constraint.</p>
+    <p>The lesson generalizes past this one box: before sizing a VM, ask what the workload is actually bound by. Static file serving is I/O and disk-bound, not CPU-bound. Sizing for the wrong resource means paying for capacity you'll never touch while quietly running low on the one you needed.</p>
+    <pre><code>server {
+    listen 80;
+    server_name miska.blog;
+    root /var/www/miska.blog;
+    index index.html;
+}</code></pre>
+    <p>That's the entire server block doing the actual work. Everything else — DNS, CDN, edge logic — sits in front of it, but this is still what answers the request at the end of the chain.</p>
+  </article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>&copy; 2026 miska.blog</span>
+    <span><a href="/about.html">About</a> · <a href="/api/data.json">status</a></span>
+  </div>
+</footer>
+</body>
+</html>

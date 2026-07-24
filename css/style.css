@@ -1,0 +1,207 @@
+:root {
+  --bg: #fbfaf8;
+  --ink: #1b1a17;
+  --ink-soft: #55524a;
+  --accent: #b5502f;
+  --line: #e6e2da;
+  --card: #ffffff;
+  --max: 720px;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Iowan Old Style", "Georgia", "Palatino Linotype", serif;
+  line-height: 1.6;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.wrap {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+header.site-head {
+  border-bottom: 1px solid var(--line);
+  padding: 40px 0 20px;
+}
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.brand h1 {
+  font-size: 28px;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.brand h1 a { color: var(--ink); }
+.brand h1 a:hover { text-decoration: none; color: var(--accent); }
+
+.tagline {
+  margin: 6px 0 0;
+  color: var(--ink-soft);
+  font-size: 15px;
+  font-style: italic;
+}
+
+nav.site-nav {
+  margin-top: 18px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+nav.site-nav a {
+  color: var(--ink-soft);
+  margin-right: 22px;
+}
+
+nav.site-nav a:hover { color: var(--accent); }
+
+main { padding: 36px 0 60px; }
+
+.post-list { list-style: none; margin: 0; padding: 0; }
+
+.post-card {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 20px;
+  padding: 26px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.post-card:first-child { padding-top: 0; }
+
+.post-thumb {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 6px;
+  background: var(--line);
+}
+
+.post-meta {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+
+.post-card h2 {
+  margin: 0 0 8px;
+  font-size: 21px;
+}
+
+.post-card h2 a { color: var(--ink); }
+.post-card h2 a:hover { color: var(--accent); text-decoration: none; }
+
+.post-card p { margin: 0; color: var(--ink-soft); font-size: 15px; }
+
+article.post {
+  padding-bottom: 20px;
+}
+
+article.post .post-meta { margin-bottom: 10px; }
+
+article.post h1 {
+  font-size: 32px;
+  margin: 0 0 18px;
+  letter-spacing: -0.01em;
+}
+
+article.post img.hero {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+article.post p { margin: 0 0 18px; font-size: 17px; }
+article.post code {
+  background: var(--line);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+article.post pre {
+  background: #1b1a17;
+  color: #f2ede4;
+  padding: 16px 18px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 14px;
+}
+article.post pre code { background: none; padding: 0; color: inherit; }
+
+.byline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 30px 0;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 24px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+}
+
+footer.site-foot {
+  border-top: 1px solid var(--line);
+  padding: 26px 0 50px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  color: var(--ink-soft);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+footer.site-foot a { color: var(--ink-soft); }
+footer.site-foot a:hover { color: var(--accent); }
+
+@media (max-width: 480px) {
+  .post-card { grid-template-columns: 1fr; }
+  .post-thumb { width: 100%; height: 160px; }
+  article.post img.hero { height: 180px; }
+}
