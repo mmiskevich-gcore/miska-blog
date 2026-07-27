@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Locked-out root is a feature, not a bug — miska.blog</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <div class="brand">
+      <h1><a href="/">miska.blog</a></h1>
+    </div>
+    <p class="tagline">notes on self-hosting, edge networks, and running things on boxes I can actually reason about</p>
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/api/data.json">API</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <a class="back-link" href="/">&larr; Back to all posts</a>
+  <article class="post">
+    <div class="post-meta">June 14, 2026 · 4 min read</div>
+    <h1>Locked-out root is a feature, not a bug</h1>
+    <img class="hero" src="/images/locked-out-root-is-a-feature.jpg" alt="">
+    <p>My first reaction to <code>ssh root@&lt;ip&gt;</code> printing a message and disconnecting, regardless of which key I offered, was that something was misconfigured. It wasn't — it's the default, and it's deliberate.</p>
+    <p>Cloud images ship a forced command in root's <code>authorized_keys</code> that does exactly one thing: tell you to log in as the non-root user instead, then close the connection. No amount of key-juggling gets around it, because it isn't checking the key at all past that point — the forced command runs unconditionally for that account.</p>
+    <p>The reasoning makes sense once you say it out loud: root is the single most-targeted account on any internet-facing box. Removing it as a valid SSH login target removes the single highest-value brute-force target by design, and the non-root user with <code>sudo</code> gives you everything you actually need.</p>
+    <p>The corollary worth remembering: if <em>that</em> non-root user's <code>sudo</code> itself misbehaves — asks for a password that was never set, for instance — that's a different, genuinely broken state, not the same intentional restriction. Don't spend time trying to route around root's lockout in that case either; recreating the instance is faster than debugging either failure mode.</p>
+  </article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>&copy; 2026 miska.blog</span>
+    <span><a href="/about.html">About</a> · <a href="/api/data.json">status</a></span>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A short list of things that break DNS propagation checks — miska.blog</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <div class="brand">
+      <h1><a href="/">miska.blog</a></h1>
+    </div>
+    <p class="tagline">notes on self-hosting, edge networks, and running things on boxes I can actually reason about</p>
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/api/data.json">API</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <a class="back-link" href="/">&larr; Back to all posts</a>
+  <article class="post">
+    <div class="post-meta">April 5, 2026 · 4 min read</div>
+    <h1>A short list of things that break DNS propagation checks</h1>
+    <img class="hero" src="/images/things-that-break-propagation-checks.jpg" alt="">
+    <p>Every time a DNS change appears to not have taken effect, the actual cause has, so far, always been one of the same handful of things — and rarely the thing it looks like at first.</p>
+    <p>The browser itself caches DNS lookups, separately from the OS. The OS resolver caches separately again, sometimes for longer than the record's TTL suggests it should. Your ISP's recursive resolver caches on its own schedule, which you have zero visibility into or control over. And checking from the same network, on the same machine, where you were looking at the old record five minutes ago is the single most common way to keep seeing a result that's already stale everywhere else.</p>
+    <pre><code>dig +short miska.blog @8.8.8.8</code></pre>
+    <p>Querying a public resolver directly, from a query tool rather than a browser, strips out at least two of those caching layers at once and gives the most honest read on whether the record has actually changed at the authoritative source — which is usually the answer to "has this propagated yet" that actually matters.</p>
+  </article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>&copy; 2026 miska.blog</span>
+    <span><a href="/about.html">About</a> · <a href="/api/data.json">status</a></span>
+  </div>
+</footer>
+</body>
+</html>

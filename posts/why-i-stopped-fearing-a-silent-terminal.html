@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why I stopped fearing a silent terminal — miska.blog</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <div class="brand">
+      <h1><a href="/">miska.blog</a></h1>
+    </div>
+    <p class="tagline">notes on self-hosting, edge networks, and running things on boxes I can actually reason about</p>
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/api/data.json">API</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <a class="back-link" href="/">&larr; Back to all posts</a>
+  <article class="post">
+    <div class="post-meta">February 15, 2026 · 3 min read</div>
+    <h1>Why I stopped fearing a silent terminal</h1>
+    <img class="hero" src="/images/why-i-stopped-fearing-a-silent-terminal.jpg" alt="">
+    <p>This is the first entry in what became this blog, written right after finishing the first pass of this whole setup — domain, VM, nginx — and before any of the CDN or edge-compute pieces existed yet.</p>
+    <p>The habit I had to unlearn first had nothing to do with DNS or servers specifically: it was flinching every time a command finished without printing anything. <code>apt install</code>, <code>systemctl reload</code>, a successful <code>scp</code> — plenty of the commands that make up this kind of work say nothing at all when they succeed, and for a while every silent return felt like it might mean something had silently gone wrong.</p>
+    <p>What actually tells you whether something worked is the exit code, not the presence of reassuring output — <code>echo $?</code> after anything that stayed quiet, or better, structuring commands so the next step only runs on success (<code>&amp;&amp;</code>) instead of blindly proceeding regardless. Once that became the reflex instead of waiting for comforting text on screen, a silent terminal stopped feeling like an open question.</p>
+    <p>Writing each step down as I went — what worked, what didn't, what the actual fix turned out to be instead of the first thing I tried — is the reason this notebook exists at all. Everything since this post is what came out of that habit.</p>
+  </article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>&copy; 2026 miska.blog</span>
+    <span><a href="/about.html">About</a> · <a href="/api/data.json">status</a></span>
+  </div>
+</footer>
+</body>
+</html>

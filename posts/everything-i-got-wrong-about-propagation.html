@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Everything I got wrong about propagation delay — miska.blog</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <div class="brand">
+      <h1><a href="/">miska.blog</a></h1>
+    </div>
+    <p class="tagline">notes on self-hosting, edge networks, and running things on boxes I can actually reason about</p>
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/api/data.json">API</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <a class="back-link" href="/">&larr; Back to all posts</a>
+  <article class="post">
+    <div class="post-meta">February 22, 2026 · 4 min read</div>
+    <h1>Everything I got wrong about propagation delay</h1>
+    <img class="hero" src="/images/everything-i-got-wrong-about-propagation.jpg" alt="">
+    <p>A few months into actually running a domain instead of just reading about how DNS works, it's worth listing out what I assumed going in that turned out to be wrong.</p>
+    <p>I assumed propagation was one event with a single, knowable completion time. It isn't — it's thousands of independent resolvers each deciding on their own schedule when to stop trusting their cached answer, which means "propagated" is really a probability that climbs toward certain over hours, not a switch that flips.</p>
+    <p>I assumed a lower TTL meant faster propagation on a change I hadn't made yet. It only helps retroactively — a TTL only bounds how long a resolver holds onto an answer <em>it already cached</em>, so lowering it moments before a change is too late to help that specific change; it only pays off if it was already low beforehand.</p>
+    <p>I assumed checking from my own laptop was a reasonable proxy for "is this live yet." It's one of the least reliable checks available, precisely because my laptop and my ISP are exactly the resolvers most likely to already have a cached answer from before the change. Querying a public resolver directly turned out to be the far more honest test, every time.</p>
+  </article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>&copy; 2026 miska.blog</span>
+    <span><a href="/about.html">About</a> · <a href="/api/data.json">status</a></span>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTTP-01 vs DNS-01, and why the choice isn't cosmetic — miska.blog</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <div class="brand">
+      <h1><a href="/">miska.blog</a></h1>
+    </div>
+    <p class="tagline">notes on self-hosting, edge networks, and running things on boxes I can actually reason about</p>
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/api/data.json">API</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <a class="back-link" href="/">&larr; Back to all posts</a>
+  <article class="post">
+    <div class="post-meta">May 17, 2026 · 5 min read</div>
+    <h1>HTTP-01 vs DNS-01, and why the choice isn't cosmetic</h1>
+    <img class="hero" src="/images/http-01-vs-dns-01.jpg" alt="">
+    <p>Let's Encrypt needs proof you actually control a domain before it'll issue a certificate for it, and it offers two common ways to provide that proof — HTTP-01 and DNS-01 — that look like implementation details until one of them fails and the other doesn't.</p>
+    <p>HTTP-01 asks your origin to serve a specific file at a specific path over plain HTTP at the moment of validation. It's simple and needs no DNS access at all, but it has a hard requirement baked in: your origin has to be reachable on port 80, right now, serving exactly that file. Anything sitting in front of the origin — a CDN not yet fully configured, a firewall rule, DNS that hasn't propagated — can silently break this path.</p>
+    <p>DNS-01 instead asks you to publish a specific TXT record under <code>_acme-challenge</code>. It needs DNS write access, which is a higher bar to automate, but once you have it, validation doesn't care whether your origin is reachable at all — it's checking the DNS zone, not the server.</p>
+    <p>The practical rule that's fallen out of using both: reach for DNS-01 first for anything sitting behind a CDN or proxy, since HTTP-01's requirement — a directly reachable origin on port 80 at exactly the right moment — is precisely the thing a CDN in front of your domain tends to complicate.</p>
+  </article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>&copy; 2026 miska.blog</span>
+    <span><a href="/about.html">About</a> · <a href="/api/data.json">status</a></span>
+  </div>
+</footer>
+</body>
+</html>

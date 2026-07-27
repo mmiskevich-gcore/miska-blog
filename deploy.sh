@@ -8,7 +8,7 @@ REMOTE_ROOT="/var/www/miska.blog"
 DIR="$(cd "$(dirname "$0")" && pwd)"
 
 rsync -avz --delete \
-  --exclude '.git' --exclude '.gitignore' --exclude 'deploy.sh' --exclude 'README.md' \
+  --exclude '.git' --exclude '.gitignore' --exclude 'deploy.sh' --exclude 'README.md' --exclude 'scripts' \
   -e "ssh -i $KEY" \
   "$DIR/" "$HOST:/tmp/miska-blog-deploy/"
 

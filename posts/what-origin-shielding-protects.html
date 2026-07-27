@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What origin shielding actually protects you from — miska.blog</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <div class="brand">
+      <h1><a href="/">miska.blog</a></h1>
+    </div>
+    <p class="tagline">notes on self-hosting, edge networks, and running things on boxes I can actually reason about</p>
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/api/data.json">API</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <a class="back-link" href="/">&larr; Back to all posts</a>
+  <article class="post">
+    <div class="post-meta">March 22, 2026 · 4 min read</div>
+    <h1>What origin shielding actually protects you from</h1>
+    <img class="hero" src="/images/what-origin-shielding-protects.jpg" alt="">
+    <p>Origin shielding showed up as an option while configuring the CDN resource, described briefly enough that it wasn't obvious why you'd want an extra caching layer between the edge and an origin that already has its own cache-friendly setup.</p>
+    <p>The scenario it's actually solving for: a piece of content just expired everywhere at once — a TTL boundary, a purge, a deploy. Without shielding, every edge node globally that gets a request for that content in the next moment independently treats it as a miss and independently goes to origin at the same time. For a popular object, that's dozens or hundreds of simultaneous origin requests for content that's about to be identical across all of them.</p>
+    <p>A shield node sits between the edge tier and the origin specifically to collapse that pattern: edge nodes miss against the shield, only the shield misses against origin, and the origin sees one request instead of many. For a test box handling essentially no concurrent traffic, that problem doesn't exist yet — which is exactly why it's a feature worth understanding and skipping for now rather than switching on by default.</p>
+  </article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>&copy; 2026 miska.blog</span>
+    <span><a href="/about.html">About</a> · <a href="/api/data.json">status</a></span>
+  </div>
+</footer>
+</body>
+</html>

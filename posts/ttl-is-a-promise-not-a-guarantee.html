@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TTL is a promise, not a guarantee — miska.blog</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <div class="brand">
+      <h1><a href="/">miska.blog</a></h1>
+    </div>
+    <p class="tagline">notes on self-hosting, edge networks, and running things on boxes I can actually reason about</p>
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/api/data.json">API</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <a class="back-link" href="/">&larr; Back to all posts</a>
+  <article class="post">
+    <div class="post-meta">May 24, 2026 · 4 min read</div>
+    <h1>TTL is a promise, not a guarantee</h1>
+    <img class="hero" src="/images/ttl-is-a-promise-not-a-guarantee.jpg" alt="">
+    <p>I'd assumed a DNS record's TTL was close to a hard contract: set it to 300 seconds, and any change is fully live everywhere five minutes later. Reality is looser than that.</p>
+    <p>Recursive resolvers are supposed to discard a cached answer once its TTL expires, and most do. But there's no way to force every resolver on the internet to actually re-check on your schedule — some cache longer than instructed, some serve a stale answer if your authoritative server is briefly unreachable, and plenty of client-side layers (OS resolver cache, browser DNS cache) add their own caching on top with their own rules.</p>
+    <p>None of this means TTLs don't matter — a low TTL genuinely narrows the window compared to a high one. It means treating a TTL as a target to plan around rather than a promise to test against. If a change needs to be verified as live, checking with a fresh <code>dig</code> query is closer to the truth than trusting the clock.</p>
+  </article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>&copy; 2026 miska.blog</span>
+    <span><a href="/about.html">About</a> · <a href="/api/data.json">status</a></span>
+  </div>
+</footer>
+</body>
+</html>

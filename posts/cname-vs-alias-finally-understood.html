@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CNAME vs ALIAS, finally understood — miska.blog</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <div class="brand">
+      <h1><a href="/">miska.blog</a></h1>
+    </div>
+    <p class="tagline">notes on self-hosting, edge networks, and running things on boxes I can actually reason about</p>
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/api/data.json">API</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <a class="back-link" href="/">&larr; Back to all posts</a>
+  <article class="post">
+    <div class="post-meta">April 26, 2026 · 4 min read</div>
+    <h1>CNAME vs ALIAS, finally understood</h1>
+    <img class="hero" src="/images/cname-vs-alias-finally-understood.jpg" alt="">
+    <p>Both a CNAME and an ALIAS (sometimes called ANAME) point one name at another name rather than at a fixed IP. From that description alone, they sound interchangeable. They aren't, and the difference shows up specifically at the root of a domain.</p>
+    <p>A CNAME record can't coexist with any other record at the same name — that's a DNS protocol rule, not a vendor limitation. Since the root of a domain almost always needs other records (MX for mail, at minimum), you can't point the bare root at a CNAME target. That's exactly why parking-page setups default to an ALIAS at the root instead: it's a provider-level construct, resolved to actual A records behind the scenes at query time, that's allowed to sit alongside other records at the root because it isn't really a CNAME under the hood.</p>
+    <p>Practically, this is why swapping a root domain from a parking ALIAS to a real A record pointing at your own server means deleting the ALIAS first — the two can't sit at the same name any more than a CNAME and an MX record could, since the ALIAS is standing in for exactly the slot the A record needs.</p>
+  </article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>&copy; 2026 miska.blog</span>
+    <span><a href="/about.html">About</a> · <a href="/api/data.json">status</a></span>
+  </div>
+</footer>
+</body>
+</html>

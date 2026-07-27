@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading nginx logs like they're trying to tell you something — miska.blog</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <div class="brand">
+      <h1><a href="/">miska.blog</a></h1>
+    </div>
+    <p class="tagline">notes on self-hosting, edge networks, and running things on boxes I can actually reason about</p>
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/api/data.json">API</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <a class="back-link" href="/">&larr; Back to all posts</a>
+  <article class="post">
+    <div class="post-meta">June 7, 2026 · 5 min read</div>
+    <h1>Reading nginx logs like they're trying to tell you something</h1>
+    <img class="hero" src="/images/reading-nginx-logs-like-they-mean-something.jpg" alt="">
+    <p>The default nginx access log format looked like a wall of text the first time I <code>tail -f</code>'d it. It stopped looking that way once I mapped each field to the question it's actually answering.</p>
+    <pre><code>203.0.113.9 - - [24/Jul/2026:14:02:11 +0000] "GET /posts/nginx-on-a-cheap-box.html HTTP/1.1" 200 3021 "-" "Mozilla/5.0"</code></pre>
+    <p>Client IP answers "who." The timestamp answers "when." The request line answers "what were they asking for." The status code answers "did it work." The byte count answers "how much did we actually send." The user agent answers "with what" — and that last one is the field that quietly does the most diagnostic work.</p>
+    <p>A real browser user agent requesting <code>/posts/...html</code> with a 200 is exactly what you'd hope to see. A bare, malformed, or clearly automated user agent hitting <code>/wp-admin</code> or <code>/.env</code> with a 404 is noise — the internet scanning every IP address it can reach for low-hanging fruit, not a real visitor, and not something to react to on a static site with nothing at those paths to find.</p>
+    <p>Once you can tell those two patterns apart at a glance, the log stops being noise and starts being the fastest way to answer "is anything actually wrong right now."</p>
+  </article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>&copy; 2026 miska.blog</span>
+    <span><a href="/about.html">About</a> · <a href="/api/data.json">status</a></span>
+  </div>
+</footer>
+</body>
+</html>

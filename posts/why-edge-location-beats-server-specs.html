@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why edge location beats server specs — miska.blog</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <div class="brand">
+      <h1><a href="/">miska.blog</a></h1>
+    </div>
+    <p class="tagline">notes on self-hosting, edge networks, and running things on boxes I can actually reason about</p>
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/api/data.json">API</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <a class="back-link" href="/">&larr; Back to all posts</a>
+  <article class="post">
+    <div class="post-meta">April 12, 2026 · 3 min read</div>
+    <h1>Why edge location beats server specs</h1>
+    <img class="hero" src="/images/why-edge-location-beats-server-specs.jpg" alt="">
+    <p>It's tempting to think a faster origin server makes a site faster. For anything that ends up cached at the edge, that's mostly not true — the origin's specs only matter on a cache miss, and a well-configured cache means most real visitors never trigger one.</p>
+    <p>What actually governs the speed a visitor experiences is the round-trip time to their nearest edge node. That's a function of geography and network topology, not CPU generation or RAM. A visitor three hops from an edge node will always beat a visitor twelve hops away, regardless of how much you upgrade the single origin box sitting behind both of them.</p>
+    <p>This reframes what's worth optimizing. Past a baseline where the origin isn't the bottleneck, the lever that actually moves the needle for most visitors is cache coverage and edge network breadth — not squeezing more performance out of the one server that, for a well-cached site, most requests never even reach.</p>
+  </article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>&copy; 2026 miska.blog</span>
+    <span><a href="/about.html">About</a> · <a href="/api/data.json">status</a></span>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why "Quotas required" isn't a config error — miska.blog</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <div class="brand">
+      <h1><a href="/">miska.blog</a></h1>
+    </div>
+    <p class="tagline">notes on self-hosting, edge networks, and running things on boxes I can actually reason about</p>
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/api/data.json">API</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <a class="back-link" href="/">&larr; Back to all posts</a>
+  <article class="post">
+    <div class="post-meta">March 1, 2026 · 3 min read</div>
+    <h1>Why "Quotas required" isn't a config error</h1>
+    <img class="hero" src="/images/why-quotas-required-isnt-a-config-error.jpg" alt="">
+    <p>Picking a VM flavor and having the portal respond with something like "Quotas required" reads, at first glance, like a mistake somewhere in the form — a wrong field, a missing setting, something to fix and resubmit.</p>
+    <p>It isn't that. It's an account-level limit on that specific resource type or tier that hasn't been raised yet, entirely separate from whether the instance configuration itself is valid. The form is correct; the account just isn't provisioned to create that particular shape of resource without an approval step first.</p>
+    <p>The fix isn't to keep adjusting fields hoping one of them is the culprit — it's to either request the quota increase through the portal, or fall back to a smaller flavor that's already within the account's default limits, which is what actually unblocked this specific test box. Worth recognizing the message for what it is early, rather than spending time debugging a form that was never the problem.</p>
+  </article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>&copy; 2026 miska.blog</span>
+    <span><a href="/about.html">About</a> · <a href="/api/data.json">status</a></span>
+  </div>
+</footer>
+</body>
+</html>

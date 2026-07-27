@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The gap between "server is up" and "site is live" — miska.blog</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <div class="brand">
+      <h1><a href="/">miska.blog</a></h1>
+    </div>
+    <p class="tagline">notes on self-hosting, edge networks, and running things on boxes I can actually reason about</p>
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/api/data.json">API</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <a class="back-link" href="/">&larr; Back to all posts</a>
+  <article class="post">
+    <div class="post-meta">May 31, 2026 · 4 min read</div>
+    <h1>The gap between "server is up" and "site is live"</h1>
+    <img class="hero" src="/images/the-gap-between-up-and-live.jpg" alt="">
+    <p><code>systemctl status nginx</code> showing <code>active (running)</code> feels like confirmation that the site is live. It confirms exactly one link in a chain of five or six, and it's rarely the one that's actually broken.</p>
+    <p>Between "the process is running" and "a stranger's browser renders the page," you've got: the port actually bound and listening, the security group allowing the traffic in, DNS resolving the domain to the right IP, and — once TLS is in the picture — a valid certificate for the name being requested. Any single one of those failing looks identical from the outside: the site just doesn't load.</p>
+    <p>The debugging order that's saved the most time: check locally on the box first (<code>curl localhost</code>), then by public IP from your own machine, then by domain name, then over HTTPS specifically if that's in play. Each step rules out one layer, and the point where it stops working tells you exactly where to look — instead of guessing across all five layers at once.</p>
+  </article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>&copy; 2026 miska.blog</span>
+    <span><a href="/about.html">About</a> · <a href="/api/data.json">status</a></span>
+  </div>
+</footer>
+</body>
+</html>

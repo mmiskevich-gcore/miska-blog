@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What a security group actually blocks (and what it doesn't) — miska.blog</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <div class="brand">
+      <h1><a href="/">miska.blog</a></h1>
+    </div>
+    <p class="tagline">notes on self-hosting, edge networks, and running things on boxes I can actually reason about</p>
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/api/data.json">API</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <a class="back-link" href="/">&larr; Back to all posts</a>
+  <article class="post">
+    <div class="post-meta">June 21, 2026 · 5 min read</div>
+    <h1>What a security group actually blocks (and what it doesn't)</h1>
+    <img class="hero" src="/images/what-a-security-group-actually-blocks.jpg" alt="">
+    <p>A security group reads like a firewall rule set, and mostly it is one, but two things about how it actually behaves aren't obvious until you've been bitten by them once.</p>
+    <p>First: groups are additive, not exclusive. Attaching a second group doesn't replace the first — a port is open if <em>any</em> attached group allows it. That's good news if you're worried about locking yourself out (keep the default group attached alongside a custom one), and bad news if you assumed removing a rule from one group closes a port that's still open via another.</p>
+    <p>Second: they're stateful. A rule allowing inbound traffic on port 443 doesn't need a matching outbound rule for the response to get back out — the return path for an already-permitted connection is implicit. This trips people coming from stricter on-prem firewall mental models, where inbound and outbound are two separate universes you configure independently.</p>
+    <p>The practical upshot: if a fresh VM times out on <code>curl</code> from the outside, check the security group before anything else. It's the single most common reason a server that's clearly running is still unreachable.</p>
+  </article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>&copy; 2026 miska.blog</span>
+    <span><a href="/about.html">About</a> · <a href="/api/data.json">status</a></span>
+  </div>
+</footer>
+</body>
+</html>

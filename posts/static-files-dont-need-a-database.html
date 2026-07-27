@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Static files don't need a database — miska.blog</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <div class="brand">
+      <h1><a href="/">miska.blog</a></h1>
+    </div>
+    <p class="tagline">notes on self-hosting, edge networks, and running things on boxes I can actually reason about</p>
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/api/data.json">API</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <a class="back-link" href="/">&larr; Back to all posts</a>
+  <article class="post">
+    <div class="post-meta">May 10, 2026 · 3 min read</div>
+    <h1>Static files don't need a database</h1>
+    <img class="hero" src="/images/static-files-dont-need-a-database.jpg" alt="">
+    <p>Every time I start a small site, there's a moment where the instinct says: this needs a real backend. A database for the posts, an admin panel to edit them, maybe a caching layer in front of the database to make up for adding one in the first place.</p>
+    <p>For a blog with a couple dozen posts and no reader-generated content, that entire stack solves problems this site doesn't have. There's no data model here more complex than "a page has a title, a date, and some text." A flat HTML file, or a small script that generates one from a plain data structure, covers that completely.</p>
+    <p>The tradeoff runs the other way too, of course — a database earns its keep the moment you have real relational queries, concurrent writers, or content that changes without a redeploy. None of that applies here. Recognizing which side of that line a project sits on, before reaching for the familiar tool, is the actual skill.</p>
+  </article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>&copy; 2026 miska.blog</span>
+    <span><a href="/about.html">About</a> · <a href="/api/data.json">status</a></span>
+  </div>
+</footer>
+</body>
+</html>

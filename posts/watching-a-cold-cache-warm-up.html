@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watching a cold cache warm up in real time — miska.blog</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <div class="brand">
+      <h1><a href="/">miska.blog</a></h1>
+    </div>
+    <p class="tagline">notes on self-hosting, edge networks, and running things on boxes I can actually reason about</p>
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/api/data.json">API</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <a class="back-link" href="/">&larr; Back to all posts</a>
+  <article class="post">
+    <div class="post-meta">April 19, 2026 · 4 min read</div>
+    <h1>Watching a cold cache warm up in real time</h1>
+    <img class="hero" src="/images/watching-a-cold-cache-warm-up.jpg" alt="">
+    <p>It's one thing to know a CDN caches responses. It's another to sit at a terminal and time the exact same request five times in a row and watch the number change in a way that only makes sense if something got faster on the second attempt.</p>
+    <pre><code>$ for i in 1 2 3 4 5; do curl -o /dev/null -s -w "%{time_total}s\n" https://cdn.miska.blog/images/test1.jpg; done
+0.412s
+0.041s
+0.038s
+0.039s
+0.037s</code></pre>
+    <p>The first request pays the full round trip to origin. Every request after it is roughly ten times faster, served entirely from the edge node's local cache. No code changed, no configuration changed between requests one and two — the only thing that changed was that the edge now had a copy.</p>
+    <p>Seeing that timing gap directly is a better explanation of what a CDN is for than any amount of reading about "reduced origin load" in the abstract. The origin load reduction is real, but the thing a user actually experiences is exactly this: request two through five just arrive faster.</p>
+  </article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>&copy; 2026 miska.blog</span>
+    <span><a href="/about.html">About</a> · <a href="/api/data.json">status</a></span>
+  </div>
+</footer>
+</body>
+</html>

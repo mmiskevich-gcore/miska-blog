@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What actually fills a "5 GiB" disk — miska.blog</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <div class="brand">
+      <h1><a href="/">miska.blog</a></h1>
+    </div>
+    <p class="tagline">notes on self-hosting, edge networks, and running things on boxes I can actually reason about</p>
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/api/data.json">API</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <a class="back-link" href="/">&larr; Back to all posts</a>
+  <article class="post">
+    <div class="post-meta">May 3, 2026 · 4 min read</div>
+    <h1>What actually fills a "5 GiB" disk</h1>
+    <img class="hero" src="/images/what-actually-fills-a-5gb-disk.jpg" alt="">
+    <p>5 GiB sounds like an absurd amount of space for a box that's only ever going to serve a handful of static files. It stops sounding that way once you actually total up what's on the disk before your content ever touches it.</p>
+    <pre><code>$ du -sh /usr /var/log /var/cache/apt /var/www 2&gt;/dev/null
+1.6G    /usr
+420M    /var/log
+310M    /var/cache/apt
+    8K    /var/www</code></pre>
+    <p>The base OS install alone accounts for over a gigabyte before nginx is even installed. The apt cache from every <code>apt update</code> and <code>apt install</code> run adds up and doesn't clear itself. Logs grow continuously and, on a box nobody's rotating aggressively, can quietly become one of the largest consumers of space on the whole system.</p>
+    <p>None of that is your content's fault — it's the fixed and semi-fixed overhead of running any Linux box at all, and it's roughly the same whether you're serving one file or a thousand. Bumping to 10&nbsp;GiB for a few cents more a month buys enough headroom that this stops being something to think about.</p>
+  </article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>&copy; 2026 miska.blog</span>
+    <span><a href="/about.html">About</a> · <a href="/api/data.json">status</a></span>
+  </div>
+</footer>
+</body>
+</html>

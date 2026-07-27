@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The compression header nobody checks until the page is slow — miska.blog</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <div class="brand">
+      <h1><a href="/">miska.blog</a></h1>
+    </div>
+    <p class="tagline">notes on self-hosting, edge networks, and running things on boxes I can actually reason about</p>
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/api/data.json">API</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <a class="back-link" href="/">&larr; Back to all posts</a>
+  <article class="post">
+    <div class="post-meta">March 15, 2026 · 3 min read</div>
+    <h1>The compression header nobody checks until the page is slow</h1>
+    <img class="hero" src="/images/the-compression-header-nobody-checks.jpg" alt="">
+    <p><code>Content-Encoding: gzip</code> is one of those response headers that's easy to never think about, because when it's working correctly it's completely invisible — the page just loads, and looks identical whether or not the bytes were compressed in transit.</p>
+    <p>It stops being invisible the moment it isn't there and should be. A small HTML or JSON test file barely benefits either way, which is exactly why it's easy to leave compression off during initial setup and not notice. The gap becomes real once the response bodies involved are actual page weight rather than a one-line JSON status check — CSS, larger HTML documents, anything text-based that compresses well.</p>
+    <p>The check costs one line: <code>curl -H "Accept-Encoding: gzip" -I</code> against a resource and look for the header in the response. Worth running once against real page weight, not just the test fixtures, before assuming it's handled.</p>
+  </article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>&copy; 2026 miska.blog</span>
+    <span><a href="/about.html">About</a> · <a href="/api/data.json">status</a></span>
+  </div>
+</footer>
+</body>
+</html>
