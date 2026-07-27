@@ -5,20 +5,35 @@ Source for the static site served at [miska.blog](http://miska.blog), the origin
 ## Structure
 
 ```
-index.html          homepage (post list)
-about.html
-posts/               individual post pages
+index.html, page2.html, page3.html   generated homepage (paginated, 8 posts/page)
+about.html                            hand-written, not generated
+posts/                                 generated post pages
 css/style.css
-static/               test path used for CDN/FastEdge experiments
-api/                  test path (data.json) used for CDN/FastEdge experiments
-images/               test images used for CDN/FastEdge experiments
+scripts/generate.py                   source of truth for post content + generator (not deployed)
+static/                               test path used for CDN/FastEdge experiments
+api/                                  test path (data.json) used for CDN/FastEdge experiments
+images/                               post hero images + test images used for CDN/FastEdge experiments
 ```
 
-`static/`, `api/`, and `images/` are precondition test paths from the CDN/FastEdge setup guide (`Onboarding/CDN-FastEdge-Setup-Guide.md` in the gcore-pm-framework project) — leave them in place, Part 3 FastEdge apps route through them.
+`static/`, `api/`, and `images/test*.jpg` are precondition test paths from the CDN/FastEdge setup guide (`Onboarding/CDN-FastEdge-Setup-Guide.md` in the gcore-pm-framework project) — leave them in place, Part 3 FastEdge apps route through them.
+
+## Adding or editing a post
+
+Edit the `POSTS` list in `scripts/generate.py` (title, date, excerpt, image, body HTML), then regenerate:
+
+```sh
+python3 scripts/generate.py
+```
+
+This rewrites `index.html`/`page2.html`/`page3.html` and everything in `posts/` from that one data source — don't hand-edit those generated files directly, edits will be overwritten on the next run. `about.html` is the one page that's still hand-written.
+
+New post images are fetched with a deterministic seed so they're reproducible, e.g.:
+
+```sh
+curl -sL -o images/my-new-post.jpg "https://picsum.photos/seed/my-new-post/800/600"
+```
 
 ## Local preview
-
-No build step — plain HTML/CSS. Open `index.html` directly, or serve it locally:
 
 ```sh
 python3 -m http.server 8000
