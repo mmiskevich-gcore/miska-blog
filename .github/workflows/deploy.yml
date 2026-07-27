@@ -1,0 +1,42 @@
+name: Deploy to origin VM
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up deploy key
+        env:
+          DEPLOY_KEY: ${{ secrets.MISKA_BLOG_DEPLOY_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$DEPLOY_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H 83.229.15.54 >> ~/.ssh/known_hosts
+
+      - name: Rsync site to VM
+        run: |
+          rsync -avz --delete \
+            --exclude '.git' --exclude '.github' --exclude '.gitignore' \
+            --exclude 'deploy.sh' --exclude 'README.md' --exclude 'scripts' \
+            -e "ssh -i ~/.ssh/deploy_key" \
+            ./ ubuntu@83.229.15.54:/tmp/miska-blog-deploy/
+
+      - name: Apply on VM and reload nginx
+        run: |
+          ssh -i ~/.ssh/deploy_key ubuntu@83.229.15.54 '
+            sudo rsync -a --delete /tmp/miska-blog-deploy/ /var/www/miska.blog/ &&
+            sudo chown -R root:root /var/www/miska.blog &&
+            sudo find /var/www/miska.blog -type f -exec chmod 644 {} \; &&
+            sudo find /var/www/miska.blog -type d -exec chmod 755 {} \; &&
+            rm -rf /tmp/miska-blog-deploy &&
+            sudo nginx -t
+          '
+
+      - name: Verify
+        run: curl -sf -o /dev/null -w "http://miska.blog -> %{http_code}\n" http://miska.blog/

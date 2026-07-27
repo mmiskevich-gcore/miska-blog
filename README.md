@@ -43,10 +43,14 @@ then visit `http://localhost:8000`.
 
 ## Deploy
 
+Pushing to `main` on GitHub (`github.com/mmiskevich-gcore/miska-blog`) auto-deploys via `.github/workflows/deploy.yml` — it rsyncs the repo to the origin VM, fixes ownership/permissions, and tests the nginx config. Requires a `MISKA_BLOG_DEPLOY_KEY` repo secret (Settings → Secrets and variables → Actions) holding a private key whose public half is in the VM's `~/.ssh/authorized_keys` for the `ubuntu` user — a dedicated deploy-only key, separate from any personal key.
+
+Manual deploy (bypasses GitHub, useful for testing before pushing):
+
 ```sh
 ./deploy.sh
 ```
 
-Rsyncs this directory to the origin VM (`/var/www/miska.blog`), fixes ownership/permissions, and reloads-tests nginx config. Requires the VM's private key at `~/.ssh/miska-blog-vm` (or set `MISKA_BLOG_KEY` to another path).
+Same rsync steps as the Actions workflow, run locally. Requires the VM's private key at `~/.ssh/miska-blog-vm` (or set `MISKA_BLOG_KEY` to another path).
 
 Note: the CDN edge (`cdn.miska.blog`) caches responses — a deploy updates the origin immediately, but the CDN may keep serving a cached copy until its TTL expires or the cache is purged in the Gcore portal (CDN resource → Cache → Purge).
