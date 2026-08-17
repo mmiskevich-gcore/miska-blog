@@ -25,7 +25,7 @@
   <article class="post">
     <div class="post-meta">July 5, 2026 · 5 min read</div>
     <h1>Delegating DNS without breaking everything</h1>
-    <img class="hero" src="/images/test3.jpg" alt="">
+    <img class="hero" src="/images/delegating-dns-without-breaking-it.jpg" alt="">
     <p>Every registrar has two screens that look like they should be the same thing and are not. One manages individual DNS records — A, CNAME, TXT — for the nameservers you're currently using. The other lets you change which nameservers you're using at all. Only the second one is nameserver delegation.</p>
     <p>I found this out by opening the wrong one first. My registrar's records panel, on noticing I clicked into it, offered to "fix" my setup by resetting me back to its own default nameservers — the exact opposite of what I was there to do. Declining that dialog was the correct move; the actual delegation screen was a separate link entirely, one level up in the domain management view.</p>
     <p>Once I found it, the change itself was two lines: swap the registrar's nameservers for the new provider's, save, and wait. Propagation is quoted anywhere from a few minutes to 48 hours depending on who you ask, and there's no way to force it — the only honest way to check is asking DNS directly rather than trusting a timer:</p>

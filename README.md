@@ -1,6 +1,6 @@
 # miska.blog
 
-Source for the static site served at [miska.blog](http://miska.blog), the origin behind the `cdn.miska.blog` CDN resource used for Gcore CDN/FastEdge testing.
+Source for the static site served at [miska.blog](http://miska.blog), the origin behind the `cdn.miska.blog` CDN resource.
 
 ## Structure
 
@@ -10,12 +10,10 @@ about.html                            hand-written, not generated
 posts/                                 generated post pages
 css/style.css
 scripts/generate.py                   source of truth for post content + generator (not deployed)
-static/                               test path used for CDN/FastEdge experiments
-api/                                  test path (data.json) used for CDN/FastEdge experiments
-images/                               post hero images + test images used for CDN/FastEdge experiments
+static/                               served page (linked from nowhere in nav, kept as a plain static asset)
+api/                                  serves data.json, linked from the site nav as "API"/"status"
+images/                               post hero images
 ```
-
-`static/`, `api/`, and `images/test*.jpg` are precondition test paths from the CDN/FastEdge setup guide (`Onboarding/CDN-FastEdge-Setup-Guide.md` in the gcore-pm-framework project) — leave them in place, Part 3 FastEdge apps route through them.
 
 ## Adding or editing a post
 

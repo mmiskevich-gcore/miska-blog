@@ -25,7 +25,7 @@
   <article class="post">
     <div class="post-meta">July 20, 2026 · 4 min read</div>
     <h1>Running nginx on a €7 box</h1>
-    <img class="hero" src="/images/test1.jpg" alt="">
+    <img class="hero" src="/images/nginx-on-a-cheap-box.jpg" alt="">
     <p>The instinct when you spin up a new server is to over-provision. More vCPUs, more RAM, "just in case." For a static nginx origin, that instinct is almost entirely wrong.</p>
     <p>The nginx worker process serving this page sits comfortably in tens of megabytes of resident memory. It doesn't fork per request, it doesn't hold a connection pool to a database, and it isn't compiling anything at request time. The bottleneck was never going to be compute.</p>
     <p>What actually needed headroom was disk — the default 5&nbsp;GiB volume gets tight once you add the OS, the apt cache, nginx itself, logs, and a handful of test images. Bumping to 10&nbsp;GiB cost a fraction of a cent more per month and removed the only real constraint.</p>

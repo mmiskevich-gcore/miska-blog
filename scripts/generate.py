@@ -81,7 +81,7 @@ POSTS = [
         date_iso="2026-07-20",
         date_display="July 20, 2026",
         read_min=4,
-        image="test1.jpg",
+        image="nginx-on-a-cheap-box.jpg",
         excerpt="Everyone reaches for a bigger instance out of habit. Nginx serving static files barely notices — the disk matters more than the RAM.",
         body="""    <p>The instinct when you spin up a new server is to over-provision. More vCPUs, more RAM, "just in case." For a static nginx origin, that instinct is almost entirely wrong.</p>
     <p>The nginx worker process serving this page sits comfortably in tens of megabytes of resident memory. It doesn't fork per request, it doesn't hold a connection pool to a database, and it isn't compiling anything at request time. The bottleneck was never going to be compute.</p>
@@ -101,7 +101,7 @@ POSTS = [
         date_iso="2026-07-15",
         date_display="July 15, 2026",
         read_min=6,
-        image="test2.jpg",
+        image="what-a-cdn-actually-does.jpg",
         excerpt="Watching a HIT turn into a MISS and back again taught me more about caching than any diagram ever did.",
         body="""    <p>I'd read the diagrams a dozen times: browser hits edge, edge checks cache, cache miss goes to origin, response gets stored, next request is a hit. It made sense on paper. It didn't feel real until I watched it happen against a page I control.</p>
     <p>The first request after creating the resource came back with a cache status of <code>MISS</code> — the edge node had nothing stored yet, so it pulled from the origin VM, served it, and kept a copy. Every request after that, from anywhere near that edge node, came back <code>HIT</code> without touching origin at all.</p>
@@ -118,7 +118,7 @@ POSTS = [
         date_iso="2026-07-05",
         date_display="July 5, 2026",
         read_min=5,
-        image="test3.jpg",
+        image="delegating-dns-without-breaking-it.jpg",
         excerpt="Nameservers versus DNS records are two different screens at every registrar, and only one of them is the one you want.",
         body="""    <p>Every registrar has two screens that look like they should be the same thing and are not. One manages individual DNS records — A, CNAME, TXT — for the nameservers you're currently using. The other lets you change which nameservers you're using at all. Only the second one is nameserver delegation.</p>
     <p>I found this out by opening the wrong one first. My registrar's records panel, on noticing I clicked into it, offered to "fix" my setup by resetting me back to its own default nameservers — the exact opposite of what I was there to do. Declining that dialog was the correct move; the actual delegation screen was a separate link entirely, one level up in the domain management view.</p>
@@ -270,7 +270,7 @@ miska.blog. 3600 IN NS ns2.example-dns.net.</code></pre>
         image="watching-a-cold-cache-warm-up.jpg",
         excerpt="Timing the same request five times in a row turns \"caching\" from a concept into something you can watch happen.",
         body="""    <p>It's one thing to know a CDN caches responses. It's another to sit at a terminal and time the exact same request five times in a row and watch the number change in a way that only makes sense if something got faster on the second attempt.</p>
-    <pre><code>$ for i in 1 2 3 4 5; do curl -o /dev/null -s -w "%{time_total}s\\n" https://cdn.miska.blog/images/test1.jpg; done
+    <pre><code>$ for i in 1 2 3 4 5; do curl -o /dev/null -s -w "%{time_total}s\\n" https://cdn.miska.blog/images/nginx-on-a-cheap-box.jpg; done
 0.412s
 0.041s
 0.038s
