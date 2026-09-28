@@ -1,0 +1,21 @@
+name: Deploy to Bunny Edge Scripting
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build script.ts from site files
+        run: python3 scripts/build-script.py
+
+      - name: Deploy Script to Bunny Edge Scripting
+        uses: BunnyWay/actions/deploy-script@main
+        with:
+          script_id: 92887
+          file: "script.ts"
