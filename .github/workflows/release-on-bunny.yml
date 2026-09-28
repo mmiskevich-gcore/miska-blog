@@ -1,11 +1,13 @@
-
 name: Deploy Bunny Scripting Script
 
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
+# id-token: write is required. Without a deploy_key the Bunny action
+# authenticates with a GitHub OIDC token, which needs this permission.
 permissions:
   id-token: write
   contents: read
@@ -15,24 +17,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '22'
-
-      - uses: denoland/setup-deno@v1
-        with:
-          deno-version: v1.x
-
-      - name: Install
-        run: "npm install"
-
-      - name: Build
-        run: "npm run build"
+      - name: Build script.ts from site files
+        run: python3 scripts/build-script.py
 
       - name: Publish the script to Bunny
-        uses: "BunnyWay/actions/deploy-script@main"
+        uses: BunnyWay/actions/deploy-script@main
         with:
           script_id: 92887
-          file: "dist/index.js"
+          file: "script.ts"

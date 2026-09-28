@@ -46,7 +46,7 @@ Two deploy targets run on every push to `main`: the origin VM (below) and a Bunn
 
 ### Bunny Edge Scripting
 
-`.github/workflows/deploy-bunny.yml` builds `script.ts` and uploads it to Bunny script `92887` with `BunnyWay/actions/deploy-script`. Auth uses Bunny's GitHub App, so the repo must be linked to the script in the Bunny dashboard (Edge Scripting → script → Deployment → GitHub). To use a deploy key instead, add a `BUNNY_DEPLOY_KEY` repo secret and pass it to the action as `deploy_key: ${{ secrets.BUNNY_DEPLOY_KEY }}`.
+`.github/workflows/release-on-bunny.yml` builds `script.ts` and uploads it to Bunny script `92887` with `BunnyWay/actions/deploy-script`. The file was created by Bunny's GitHub integration when the repo was linked to the script; its body was replaced with the Python build, so don't re-run "connect GitHub" in the Bunny dashboard or it will overwrite it with an npm-based template again. Auth uses Bunny's GitHub App via an OIDC token, which is why the workflow needs `permissions: id-token: write`. To use a deploy key instead, add a `BUNNY_DEPLOY_KEY` repo secret and pass it to the action as `deploy_key: ${{ secrets.BUNNY_DEPLOY_KEY }}`.
 
 `script.ts` is generated, not committed. `scripts/build-script.py` embeds every site file into it (HTML/CSS/JSON as text, images as base64) and the script serves them from memory at the edge, with no origin. Build it locally to inspect or paste into the dashboard:
 
